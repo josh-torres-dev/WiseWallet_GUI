@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiseWallet - Modern Budget Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #121212; /* Dark Mode Background */
+            color: #80D0FF; /* Slightly Brighter Blue Text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        /* Background Accents */
+        .background-accent {
+            position: absolute;
+            top: 10%;
+            left: 20%;
+            z-index: -1;
+            width: 200px;
+            height: 200px;
+            background: rgba(80, 208, 255, 0.3);
+            border-radius: 50%;
+            animation: moveCircle 8s ease-in-out infinite;
+        }
+
+        .background-accent:nth-child(2) {
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            background: rgba(80, 208, 255, 0.4);
+            animation: moveCircle 10s ease-in-out infinite;
+        }
+
+        .background-accent:nth-child(3) {
+            bottom: 10%;
+            right: 10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(80, 208, 255, 0.2);
+            animation: moveCircle 6s ease-in-out infinite;
+        }
+
+        @keyframes moveCircle {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(100px, 100px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        header {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #80D0FF; /* Slightly Brighter Blue for Header */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #B0BEC5; /* Lighter Grayish Text for Subheader */
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 90%;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .widget {
+            background: #1E1E1E; /* Dark Card Background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Deeper Shadow */
+            color: #80D0FF; /* Slightly Brighter Blue Text */
+            flex: 1 1 calc(33.33% - 20px);
+            max-width: calc(33.33% - 20px);
+            transition: transform 0.3s;
+        }
+
+        .widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget h2 {
+            font-size: 1.5rem;
+            color: #29B6F6; /* Light Blue for Widget Titles */
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        .widget input,
+        .widget button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .widget input {
+            background: #333333; /* Dark Input Background */
+            color: #80D0FF; /* Slightly Brighter Blue Text for Inputs */
+        }
+
+        .widget button {
+            background: #29B6F6; /* Light Blue Button */
+            color: #FFF; /* White Text */
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .widget button:hover {
+            background: #0288D1; /* Darker Blue for Button Hover */
+            color: #FFFF00; /* Yellow Text on Hover */
+        }
+
+        .summary-card, .chart-card {
+            text-align: center;
+        }
+
+        .chart {
+            height: 200px;
+            width: 100%;
+            background: #333333; /* Placeholder for Chart */
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .goal-progress {
+            background: #2E2E2E; /* Dark Progress Bar Background */
+            border-radius: 5px;
+            height: 20px;
+            width: 100%;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .goal-progress-bar {
+            background: #29B6F6; /* Light Blue Progress Bar */
+            height: 100%;
+            border-radius: 5px;
+            width: 50%; /* Example Progress */
+        }
+
+        footer {
+            text-align: center;
+            margin: 20px 0;
+            color: #B0BEC5; /* Light Gray Footer Text */
+            font-size: 0.9rem;
+        }
+
+        /* Toggle Button */
+        .toggle-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #29B6F6;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-button:hover {
+            background: #0288D1; /* Darker Blue for Button Hover */
+        }
+
+        .toggle-button i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Animations */
+        .widget, .summary-card, .chart-card {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .widget:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .widget:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .widget:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Accents -->
+    <div class="background-accent"></div>
+    <div class="background-accent"></div>
+    <div class="background-accent"></div>
+
+    <header>
+        <h1>WiseWallet</h1>
+        <p>Your modern personal finance companion</p>
+    </header>
+
+    <main>
+        <!-- Income Section -->
+        <div class="widget">
+            <h2>Add Income</h2>
+            <form method="POST" action="/add_income">
+                <input type="text" name="source" placeholder="Income Source" required>
+                <input type="number" name="amount" placeholder="Amount ($)" required>
+                <button type="submit">Add Income</button>
+            </form>
+        </div>
+
+        <!-- Expense Section -->
+        <div class="widget">
+            <h2>Add Expense</h2>
+            <form method="POST" action="/add_expense">
+                <input type="text" name="category" placeholder="Expense Category" required>
+                <input type="number" name="amount" placeholder="Amount ($)" required>
+                <button type="submit">Add Expense</button>
+            </form>
+        </div>
+
+        <!-- Budget Goals -->
+        <div class="widget">
+            <h2>Set a Budget Goal</h2>
+            <form method="POST" action="/set_goal">
+                <input type="text" name="goal_name" placeholder="Goal Name (e.g., Vacation)" required>
+                <input type="number" name="target_amount" placeholder="Target Amount ($)" required>
+                <button type="submit">Set Goal</button>
+            </form>
+        </div>
+
+        <!-- Financial Summary -->
+        <div class="summary-card widget">
+            <h2>Financial Summary</h2>
+            <p><span>Total Income:</span> $0</p>
+            <p><span>Total Expenses:</span> $0</p>
+            <p><span>Remaining Balance:</span> $0</p>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-card widget">
+            <h2>Financial Chart</h2>
+            <div class="chart"></div>
+        </div>
+
+        <!-- Goal Progress -->
+        <div class="widget">
+            <h2>Goal Progress</h2>
+            <div class="goal-progress">
+                <div class="goal-progress-bar"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toggle Button for Dark Mode -->
+    <button class="toggle-button">
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script>
+        const toggleButton = document.querySelector('.toggle-button');
+        let isDarkMode = true;
+
+        toggleButton.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            toggleButton.innerHTML = isDarkMode ?
+                '<i class="fas fa-sun"></i>' :
+                '<i class="fas fa-moon"></i>';
+        });
+    </script>
+</body>
+</html>
